@@ -1,16 +1,13 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from utils import is_file
+from controllers.parseController import parse_csv
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
 
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    print("Ingrese la ruta\n>>")
+    path=input()
+    data = parse_csv(path)
+    for da in data:
+        print(data[da])
+    print('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
