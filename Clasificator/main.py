@@ -1,7 +1,8 @@
-from controllers.parseController import parse_csv
+from controllers.parse_controller import parse_csv
 
-
-terminos = ["terminos"]
+"""
+Main program execution
+"""
 if __name__ == '__main__':
     print("Ingrese la ruta\n>>")
     path = input()
