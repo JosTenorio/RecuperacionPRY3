@@ -2,7 +2,7 @@ import os
 import re
 
 regex_paths = r'[A-z]:\\(?:[^\\\/:*?"<>|\r\n]+\\)*[^\\\/:*?"<>|\r\n]*'
-regex_files = r'[a-zA-Z]:[\\\/](?:[a-zA-Z0-9\_]+[\\\/])*([a-zA-Z0-9\_]+\.csv)'
+regex_files = r'[a-zA-Z]:[\\\/](?:[a-zA-Z0-9\_-]+[\\\/])*([a-zA-Z0-9\_\-]+\.csv)'
 
 
 def is_path(path):
