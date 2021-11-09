@@ -27,8 +27,8 @@ def parse_csv(path):
     file.readline()
     docs = {}
     class_list = []
-    term_list = []
     class_groups = {}
+    term_list = []
     for line in file.readlines():
         fields = line.split("\t")
         terms = parse_terms(term_list, fields[3])
@@ -40,7 +40,7 @@ def parse_csv(path):
     return collection
 
 
-def parse_terms(term_list: list, terms):
+def parse_terms(term_list, terms):
     """
     type:term_list(list)
     type:terms(string)
@@ -48,7 +48,7 @@ def parse_terms(term_list: list, terms):
     term_dict = {}
     parsed_terms = re.findall(TERM_REGEX, terms)
     for raw_term in parsed_terms:
-        processed_term = Term(raw_term[0], raw_term[1])
+        processed_term = Term(raw_term[0], float(raw_term[1]))
         term_dict[processed_term.term] = processed_term
         insert_term(term_list, processed_term.term)
     return term_dict
