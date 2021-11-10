@@ -9,7 +9,7 @@ if __name__ == '__main__':
     test_path = input("Ingrese la ruta de la colección de prueba\n>>")
     training_collection = parse_csv(training_path)
     test_collection = parse_csv(test_path)
-    rocchio_clasification(training_collection, test_collection, 0.95, 0.05)
+    rocchio_clasification(training_collection, test_collection, 0.8, 0.2)
 
 # C:\Users\JOS\Desktop\RecuperacionPRY3\TestFiles\training-set.csv
 

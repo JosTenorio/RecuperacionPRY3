@@ -2,6 +2,7 @@ class Document:
 
     def __init__(self, terms: dict, docid: int, num_terms: int, doc_class: str):
         """
+        :type terms: dict
         :type num_terms: int
         :type docid: int
         :type doc_class: string

@@ -7,12 +7,6 @@ from models.Collection import Collection
 # Global variable
 TERM_REGEX = r"([a-z0-9\.]+)\/(\d*\.?\d+)"
 
-"""
-    Function that returns a dictionary of terms given a csv file with the next format:
-    [documentId]\t[class]\t[termCount]\t[term/termWeight ]+
-    :type path: string
-"""
-
 
 def parse_csv(path):
     """
@@ -42,8 +36,9 @@ def parse_csv(path):
 
 def parse_terms(term_list, terms):
     """
-    type:term_list(list)
-    type:terms(string)
+    :type term_list:list
+    :type terms:string
+    :returns dict
     """
     term_dict = {}
     parsed_terms = re.findall(TERM_REGEX, terms)
@@ -54,23 +49,23 @@ def parse_terms(term_list, terms):
     return term_dict
 
 
-def insert_doc_group(class_group: dict, class_name, docid):
+def insert_doc_group(class_group: dict, class_name, doc_id):
     """
-    type: class_group(dict)
-    type: class_name(string)
-    type: docid(int)
+    :type class_group:dict
+    :type class_name:string
+    :type doc_id:int
     """
     if class_name in class_group:
-        class_group[class_name].append(docid)
+        class_group[class_name].append(doc_id)
     else:
-        class_group[class_name] = [docid]
+        class_group[class_name] = [doc_id]
     return class_group
 
 
 def insert_class(class_list: list, class_name):
     """
-    type:class_list(list)
-    type:class_name(string)
+    :type class_list:list
+    :type class_name:string
     """
     if not class_name in class_list:
         class_list.append(class_name)
@@ -79,8 +74,8 @@ def insert_class(class_list: list, class_name):
 
 def insert_term(term_list, term):
     """
-    type:term_list(list)
-    type:term(string)
+    :type term_list:list
+    :type term:string
     """
     if not term in term_list:
         term_list.append(term)
