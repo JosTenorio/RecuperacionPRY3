@@ -10,11 +10,10 @@ class Document:
         self.doc_class = doc_class
         self.num_terms = num_terms
         self.terms = terms
-        self.training = "a"
 
-    def __str__(self):
+    def __str__(self) -> str:
         output = (
             f"Documento id {self.docid}, de la clase {self.doc_class}, con {self.num_terms}")
-        for term in self.terms:
+        for key, term in self.terms.items():
             output += "\n"+str(term)
         return output

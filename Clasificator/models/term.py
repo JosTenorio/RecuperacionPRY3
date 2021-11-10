@@ -10,4 +10,4 @@ class Term:
         self.weight = weight
 
     def __str__(self) -> str:
-        return f"Término {self.term}, weight {self.weight}"
+        return f"Término {self.term}, peso {self.weight}"

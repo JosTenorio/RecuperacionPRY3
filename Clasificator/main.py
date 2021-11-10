@@ -1,12 +1,16 @@
 from controllers.parse_controller import parse_csv
-from controllers.rochio_controller import calc_centroids
+from controllers.rochio_controller import rocchio_clasification
 
 """
 Main program execution
 """
 if __name__ == '__main__':
-    print("Ingrese la ruta\n>>")
-    path = input()
-    collection = parse_csv(path)
+    training_path = input("Ingrese la ruta de la colección de entrenamiento\n>>")
+    test_path = input("Ingrese la ruta de la colección de prueba\n>>")
+    training_collection = parse_csv(training_path)
+    test_collection = parse_csv(test_path)
+    rocchio_clasification(training_collection, test_collection, 0.95, 0.05)
 
-    calc_centroids(collection)
+# C:\Users\JOS\Desktop\RecuperacionPRY3\TestFiles\training-set.csv
+
+# C:\Users\JOS\Desktop\RecuperacionPRY3\TestFiles\test-set.csv
