@@ -37,6 +37,7 @@ def save_rocchio_results(rocchio_classes, save_path, betta, gamma):
             for doc_id, classification in rocchio_classes.items():
                 file.write(f"{str(doc_id)} -> {classification[0]} -> {classification[1]} ({classification[2]})\n")
         file.close()
+        print('Un resultado de la clasificación de rochhio se ha guardado en \'' + save_path + '\\Rocchio_results (' + timestr + ').txt\'')
     except IOError:
         print(f"No se pudieron guardar los resultados de la ejecución de Rocchio con parametros betta = {str(betta)}, "
               f"gamma = {str(gamma)}")
@@ -101,7 +102,10 @@ def calc_centroids(collection: Collection, betta, gamma):
         non_class_docs = get_complement_docs(collection.class_groups, class_name)
         class_vector = calc_class_vector(collection, class_docs, betta)
         non_class_vector = calc_class_vector(collection, non_class_docs, gamma)
+        class_vector = normalize_centroid(class_vector)
+        non_class_vector = normalize_centroid(non_class_vector)
         centroid = subs_vector(class_vector, non_class_vector)
+        centroid = normalize_centroid(centroid)
         rocchio_centroids[class_name] = centroid
     return rocchio_centroids
 
