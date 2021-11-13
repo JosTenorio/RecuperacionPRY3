@@ -1,11 +1,13 @@
+# Imports
 import numpy as np
-
 from models.Collection import Collection
 from models.Document import Document
+from utils import get_complement_docs
 import time
 
 
-def rocchio_clasification(training_coll: Collection, test_coll: Collection, betta, gamma):
+# Functions
+def rocchio_classification(training_coll: Collection, test_coll: Collection, betta, gamma):
     """
     Function that performs rochhio classifacation on the test collection, given the training collection and params
     saves result in a txt file
@@ -37,7 +39,8 @@ def save_rocchio_results(rocchio_classes, save_path, betta, gamma):
             for doc_id, classification in rocchio_classes.items():
                 file.write(f"{str(doc_id)} -> {classification[0]} -> {classification[1]} ({classification[2]})\n")
         file.close()
-        print('Un resultado de la clasificación de rochhio se ha guardado en \'' + save_path + '\\Rocchio_results (' + timestr + ').txt\'')
+        print(
+            'Un resultado de la clasificación de Rocchio se ha guardado en \'' + save_path + '\\Rocchio_results (' + timestr + ').txt\'')
     except IOError:
         print(f"No se pudieron guardar los resultados de la ejecución de Rocchio con parametros betta = {str(betta)}, "
               f"gamma = {str(gamma)}")
@@ -119,14 +122,6 @@ def normalize_centroid(centroid):
     vector_norm = np.linalg.norm(list(centroid.values()))
     normalized_list_dict = [(k, (v / vector_norm).item()) for k, v in centroid.items()]
     return dict(normalized_list_dict)
-
-
-def get_complement_docs(class_groups: dict, class_name):
-    classes = []
-    for key in class_groups.keys():
-        if key != class_name:
-            classes += (class_groups[key])
-    return classes
 
 
 def calc_class_vector(collection: Collection, doc_list, rocchio_const):

@@ -1,13 +1,15 @@
+# Imports
 import re
 from utils import load_file
 from models.term import Term
 from models.Document import Document
 from models.Collection import Collection
 
-# Global variable
+# Constants
 TERM_REGEX = r"([a-z0-9\.]+)\/(\d*\.?\d+)"
 
 
+# Functions
 def parse_csv(path):
     """
     Function that parser an entire csv file into a collection object

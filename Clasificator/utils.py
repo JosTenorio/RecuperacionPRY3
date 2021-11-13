@@ -1,13 +1,14 @@
+# Imports
 import re
 
+# Constants
 regex_paths = r'[A-z]:\\(?:[^\\\/:*?"<>|\r\n]+\\)*[^\\\/:*?"<>|\r\n]*'
 regex_files = r'[a-zA-Z]:[\\\/](?:[a-zA-Z0-9\_-]+[\\\/])*([a-zA-Z0-9\_\-]+\.csv)'
 
 
+# Functions
 def is_path(path):
     return bool(re.match(regex_paths, path))
-
-# Validation for files
 
 
 def is_file(path):
@@ -32,3 +33,11 @@ def load_file(path):
     if not is_file(path):
         return None
     return open_file(path)
+
+
+def get_complement_docs(class_groups: dict, class_name):
+    classes = []
+    for key in class_groups.keys():
+        if key != class_name:
+            classes += (class_groups[key])
+    return classes
