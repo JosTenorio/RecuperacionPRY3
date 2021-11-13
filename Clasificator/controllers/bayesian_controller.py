@@ -14,6 +14,7 @@ def bayesian_classification(training_coll: Collection, test_coll: Collection):
     :return None
     """
     bayesian_classes = calc_bysn_classes(training_coll)
+    # bayesian_classes = {class_name : BayesianClass}
     return
 
 
