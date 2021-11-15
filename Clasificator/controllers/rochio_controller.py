@@ -19,7 +19,7 @@ def rocchio_classification(training_coll: Collection, test_coll: Collection, bet
     """
     class_centroids = calc_centroids(training_coll, betta, gamma)
     rocchio_classes = classify_docs(test_coll, class_centroids)
-    save_rocchio_results(rocchio_classes, "..\\Results", betta, gamma)
+    save_rocchio_results(rocchio_classes, "..\\Results\\Rocchio", betta, gamma)
 
 
 def save_rocchio_results(rocchio_classes, save_path, betta, gamma):
@@ -34,10 +34,13 @@ def save_rocchio_results(rocchio_classes, save_path, betta, gamma):
     timestr = time.strftime("%H-%M-%S")
     try:
         with open(save_path + '\\Rocchio_results (' + timestr + ').txt', 'w') as file:
-            file.write(f"Parametros usados: betta = {str(betta)}, gamma = {str(gamma)}\n")
-            file.write(f"docid -> clase_real -> clase_asignada_clasificador (similitud)\n\n")
+            file.write(
+                f"Parametros usados: betta = {str(betta)}, gamma = {str(gamma)}\n")
+            file.write(
+                f"docid -> clase_real -> clase_asignada_clasificador (similitud)\n\n")
             for doc_id, classification in rocchio_classes.items():
-                file.write(f"{str(doc_id)} -> {classification[0]} -> {classification[1]} ({classification[2]})\n")
+                file.write(
+                    f"{str(doc_id)} -> {classification[0]} -> {classification[1]} ({classification[2]})\n")
         file.close()
         print(
             'Un resultado de la clasificación de Rocchio se ha guardado en \'' + save_path + '\\Rocchio_results (' + timestr + ').txt\'')
@@ -70,7 +73,8 @@ def classify_docs(collection: Collection, rocchio_centroids):
     """
     rocchio_classes = {}
     for doc_id, doc in collection.documents.items():
-        rocchio_classes[doc_id] = [doc.doc_class] + get_rocchio_class(doc, rocchio_centroids)
+        rocchio_classes[doc_id] = [doc.doc_class] + \
+            get_rocchio_class(doc, rocchio_centroids)
     return rocchio_classes
 
 
@@ -99,10 +103,18 @@ def get_rocchio_class(doc: Document, rocchio_centroids):
 
 
 def calc_centroids(collection: Collection, betta, gamma):
+    """
+    Calculates class centroids based on the rochio metod.
+    :type collection: Collection
+    :type betta: float
+    :type gamma: float
+    returns rochio_centroids: Dict
+    """
     rocchio_centroids = {}
     for class_name in collection.class_list:
         class_docs = collection.class_groups[class_name]
-        non_class_docs = get_complement_docs(collection.class_groups, class_name)
+        non_class_docs = get_complement_docs(
+            collection.class_groups, class_name)
         class_vector = calc_class_vector(collection, class_docs, betta)
         non_class_vector = calc_class_vector(collection, non_class_docs, gamma)
         class_vector = normalize_centroid(class_vector)
@@ -120,7 +132,8 @@ def normalize_centroid(centroid):
     :return dict
     """
     vector_norm = np.linalg.norm(list(centroid.values()))
-    normalized_list_dict = [(k, (v / vector_norm).item()) for k, v in centroid.items()]
+    normalized_list_dict = [(k, (v / vector_norm).item())
+                            for k, v in centroid.items()]
     return dict(normalized_list_dict)
 
 

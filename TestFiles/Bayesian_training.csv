@@ -1,9 +1,6 @@
 DOCID	CLASE	NUM-TERMINOS	TERMINOS[termino/peso]
-1	spam	1	oferta/0.8259
-2	!spam	1	presupuesto/0.9115 
-3	!spam	1	presupuesto/0.9115
-4	spam	1	oferta/0.8259
-5	!spam	1	presupuesto/0.9115
-6	!spam	1	salidas/0.9115
-7	!spam	2	oferta/0.8259 presupuesto/0.9115 
-8	spam	1	presupuesto/0.9115
+1	C1	2	c/1 f/1
+2	C2	2	d/1 f/1 
+3	C3	3	a/1 b/1 e/1
+4	C3	2	b/1 e/1
+5	C3	3	a/1 c/1 e/1
