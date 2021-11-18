@@ -7,13 +7,11 @@ from models.BayesianClassTerm import BayesianClassTerm
 import numpy as np
 
 
-def save_bayesian_results(bayesian_classes, save_path, ):
+def save_bayesian_results(bayesian_classes, save_path):
     """
     Function that saves the given results of a rocchio classfication in the given path in a txt file
-    :type rocchio_classes: dict
+    :type bayesian_classes: dict
     :type save_path: str
-    :type betta: float
-    :type gamma:float
     :return None
     """
     timestr = time.strftime("%H-%M-%S")
@@ -26,7 +24,8 @@ def save_bayesian_results(bayesian_classes, save_path, ):
                     f"{str(doc_id)} -> {classification[0]} -> {classification[1]} ({classification[2]})\n")
         file.close()
         print(
-            'Un resultado de la clasificación de Bayesianos Ingenuos se ha guardado en \'' + save_path + '\\Rocchio_results (' + timestr + ').txt\'')
+            'Un resultado de la clasificación de Bayesianos Ingenuos se ha guardado en \'' + save_path +
+            '\\Bayesian_results (' + timestr + ').txt\'')
     except IOError:
         print(
             f"No se pudieron guardar los resultados de la ejecución de Bayesianos Ingenuos")
@@ -44,7 +43,7 @@ def bayesian_classification(training_coll: Collection, test_coll: Collection):
     bayesian_classes = calc_bysn_classes(training_coll)
     # bayesian_classes = {class_name : BayesianClass}
     classified_docs = classify_docs(bayesian_classes, test_coll)
-    save_bayesian_results(classified_docs, "../Results/Bayesian")
+    save_bayesian_results(classified_docs, "..\\Results\\Bayesian")
     return
 
 

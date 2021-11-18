@@ -1,4 +1,0 @@
-Parametros usados: betta = 0.8, gamma = 0.2
-docid -> clase_real -> clase_asignada_clasificador (similitud)
-6 -> C3 -> C3 (0.48044516800000003)
-7 -> C1 -> C1 (0.527255004)

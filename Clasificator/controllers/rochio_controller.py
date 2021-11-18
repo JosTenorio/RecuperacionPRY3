@@ -33,7 +33,7 @@ def save_rocchio_results(rocchio_classes, save_path, betta, gamma):
     """
     timestr = time.strftime("%H-%M-%S")
     try:
-        with open(save_path + '\\Rocchio_results (' + timestr + ').txt', 'w') as file:
+        with open(save_path + '\\Rocchio_results[' + str((betta, gamma)) + '] (' + timestr + ').txt', 'w') as file:
             file.write(
                 f"Parametros usados: betta = {str(betta)}, gamma = {str(gamma)}\n")
             file.write(
@@ -74,11 +74,11 @@ def classify_docs(collection: Collection, rocchio_centroids):
     rocchio_classes = {}
     for doc_id, doc in collection.documents.items():
         rocchio_classes[doc_id] = [doc.doc_class] + \
-            get_rocchio_class(doc, rocchio_centroids)
+                                  get_rocchio_class_rank(doc, rocchio_centroids)
     return rocchio_classes
 
 
-def get_rocchio_class(doc: Document, rocchio_centroids):
+def get_rocchio_class_rank(doc: Document, rocchio_centroids):
     """
     Classifies the given document into one of the classes given via the rocchio calculated centroids
     rocchio method
@@ -86,20 +86,12 @@ def get_rocchio_class(doc: Document, rocchio_centroids):
     :type rocchio_centroids: dict
     :return list
     """
-    highest_sim = ["", 0]
-    first = True
+    class_rank = []
     for class_name, centroid in rocchio_centroids.items():
         sim = cacl_sim(doc, centroid)
-        if first:
-            highest_sim[1] = sim
-            highest_sim[0] = class_name
-            first = False
-        elif highest_sim[1] < sim:
-            highest_sim[0] = class_name
-            highest_sim[1] = sim
-        else:
-            pass
-    return highest_sim
+        class_rank.append([class_name, sim])
+    class_rank.sort(key=lambda x: x[1])
+    return class_rank
 
 
 def calc_centroids(collection: Collection, betta, gamma):
@@ -117,8 +109,8 @@ def calc_centroids(collection: Collection, betta, gamma):
             collection.class_groups, class_name)
         class_vector = calc_class_vector(collection, class_docs, betta)
         non_class_vector = calc_class_vector(collection, non_class_docs, gamma)
-        class_vector = normalize_centroid(class_vector)
-        non_class_vector = normalize_centroid(non_class_vector)
+        # class_vector = normalize_centroid(class_vector)
+        # non_class_vector = normalize_centroid(non_class_vector)
         centroid = subs_vector(class_vector, non_class_vector)
         centroid = normalize_centroid(centroid)
         rocchio_centroids[class_name] = centroid
