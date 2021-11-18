@@ -33,14 +33,17 @@ def save_rocchio_results(rocchio_classes, save_path, betta, gamma):
     """
     timestr = time.strftime("%H-%M-%S")
     try:
-        with open(save_path + '\\Rocchio_results[' + str((betta, gamma)) + '] (' + timestr + ').txt', 'w') as file:
+        with open(save_path + '\\Rocchio_results[' + str((betta, gamma)) + ' , {' + timestr + '}].txt', 'w') as file:
             file.write(
                 f"Parametros usados: betta = {str(betta)}, gamma = {str(gamma)}\n")
             file.write(
-                f"docid -> clase_real -> clase_asignada_clasificador (similitud)\n\n")
+                f"docid -> clase_real -> clase_asignada_clasificador\n\n")
             for doc_id, classification in rocchio_classes.items():
                 file.write(
-                    f"{str(doc_id)} -> {classification[0]} -> {classification[1]} ({classification[2]})\n")
+                    f"{str(doc_id)} -> {classification[0]} -> {classification[1][0][0]}\n")
+                for class_similitude in classification[1]:
+                    file.write(
+                        f"\t•{class_similitude[0]}: {class_similitude[1]}\n")
         file.close()
         print(
             'Un resultado de la clasificación de Rocchio se ha guardado en \'' + save_path + '\\Rocchio_results (' + timestr + ').txt\'')
@@ -73,8 +76,8 @@ def classify_docs(collection: Collection, rocchio_centroids):
     """
     rocchio_classes = {}
     for doc_id, doc in collection.documents.items():
-        rocchio_classes[doc_id] = [doc.doc_class] + \
-                                  get_rocchio_class_rank(doc, rocchio_centroids)
+        rocchio_classes[doc_id] = (doc.doc_class,
+                                   get_rocchio_class_rank(doc, rocchio_centroids))
     return rocchio_classes
 
 
@@ -90,7 +93,7 @@ def get_rocchio_class_rank(doc: Document, rocchio_centroids):
     for class_name, centroid in rocchio_centroids.items():
         sim = cacl_sim(doc, centroid)
         class_rank.append([class_name, sim])
-    class_rank.sort(key=lambda x: x[1])
+    class_rank.sort(key=lambda x: x[1], reverse=True)
     return class_rank
 
 
